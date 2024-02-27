@@ -1,20 +1,59 @@
 import React, { useEffect, useState } from "react";
 import Facultyservice from "../../Services/Facultyservice";
 import './regist.css';
-import  '../startbootstrap-sb-admin-2-gh-pages/vendor/fontawesome-free/css/all.min.css';
-
-
+import '../startbootstrap-sb-admin-2-gh-pages/vendor/fontawesome-free/css/all.min.css';
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 export default function Registration() {
+    const navigate = useNavigate();
+
+    const clientId = "269454792153-rss16496mirh4fct923tatmupblsgdln.apps.googleusercontent.com";
     const [profilePhoto, setProfilePhoto] = useState(null);
+    const handleSuccess = (credentialResponse) => {
+        const credentialsdata = jwtDecode(credentialResponse.credential);
+        console.log(credentialsdata.email_verified)
+        if (credentialsdata.
+            email_verified === true) {
+                // <Navigate to="/Home" replace={true} />
+                navigate('/home', { replace: true });
+
+        }
+        else {
+            alert("error");
+        }
+        // const authorizationCode = credentialResponse.code;
+        // fetch('/api/auth/google', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ code: authorizationCode }),
+        // })
+        //     .then(response => response.json())
+        //     // .then(data => {
+        //     //     console.log('Login successful, backend response:', data);
+        //     // })
+        //     .catch(error => {
+        //         console.error('Error exchanging authorization code:', error);
+        //     });
+        console.log(credentialResponse);
+    };
+    // const onSuccess = (res) => {
+    //     console.log("succes",res)
+    // }
+
+    const handleError = () => {
+        console.log('Login Failed');
+    };
 
     function uploadFile(event) {
         setProfilePhoto(event.target.files[0]);
     }
-    console.log(profilePhoto)
 
     function submitform(event) {
-        event.preventDefault(); 
+        event.preventDefault();
         const formData = new FormData();
         formData.append("Fullname", document.getElementById("name").value);
         formData.append("MobileNumber", document.getElementById("phonenumber").value);
@@ -28,13 +67,13 @@ export default function Registration() {
         Facultyservice.register(formData).then((res) => {
             console.log(res);
         })
-        .catch((error) => {
-            if (error.response && error.response.status === 400) {
-                alert("Invalid Username or Password");
-            } else {
-                console.error("An error occurred:", error);
-            }
-        });
+            .catch((error) => {
+                if (error.response && error.response.status === 400) {
+                    alert("Invalid Username or Password");
+                } else {
+                    console.error("An error occurred:", error);
+                }
+            });
         ;
     }
 
@@ -114,9 +153,14 @@ export default function Registration() {
                                         Register Account
                                     </a>
                                     <hr></hr>
-                                    <a href="index.html" class="btn btn-google btn-user btn-block">
+                                    {/* <a href="index.html" class="btn btn-google btn-user btn-block">
                                         <i class="fab fa-google fa-fw"></i> Register with Google
-                                    </a>
+                                    </a> */}
+                                    <GoogleLogin
+                                        onSuccess={handleSuccess}
+                                        onError={handleError}
+                                        clientId={clientId}
+                                    />
                                     <a href="index.html" class="btn btn-facebook btn-user btn-block">
                                         <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
                                     </a>

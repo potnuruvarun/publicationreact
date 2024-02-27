@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Facultyservice from "../../Services/Facultyservice";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 function Forgot() {
     const [FormData, setformdata] = useState([]);
@@ -9,7 +8,7 @@ function Forgot() {
     const [showPasswordField, setShowPasswordField] = useState(false);
     const [emailSubmitted, setEmailSubmitted] = useState(false);
     const [submitbutton, setsubmitbutton] = useState(false);
-    const [data,setdata]=useState([]);
+    const [data, setdata] = useState([]);
 
 
     function submitotp(event) {
@@ -43,23 +42,21 @@ function Forgot() {
         }
     }
 
-    function submitpass()
-    {
-        const obj={
-            email:document.getElementById('email').value,
-            otp:document.getElementById('otp1').value,
-            password:document.getElementById('password1').value
+    function submitpass() {
+        const obj = {
+            email: document.getElementById('email').value,
+            otp: document.getElementById('otp1').value,
+            password: document.getElementById('password1').value
         }
-        setdata([...data,obj]);
+        setdata([...data, obj]);
         console.log(data)
-        Facultyservice.reset(obj).then((resp)=>{
+        Facultyservice.reset(obj).then((resp) => {
             console.log(resp);
-            if(resp.status===200){
+            if (resp.status === 200) {
                 alert("password changed successfully");
                 window.location.reload();
             }
         })
-
     }
 
     return (
@@ -71,7 +68,7 @@ function Forgot() {
                             <div class="row">
                                 <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
                                 <div class="col-lg-6">
-                                    <div class="p-5">
+                                    <div class="p-5" style={{ marginRight: '-418px' }}>
                                         <div class="text-center">
                                             <h1 class="h4 text-gray-900 mb-2">
                                                 Forgot Your Password?
@@ -152,12 +149,12 @@ function Forgot() {
                                         </form>
                                         <hr></hr>
                                         <div class="text-center">
-                                            <a class="small" href="register.html">
+                                            <a class="small" href="/registration">
                                                 Create an Account!
                                             </a>
                                         </div>
                                         <div class="text-center">
-                                            <a class="small" href="login.html">
+                                            <a class="small" href="/">
                                                 Already have an account? Login!
                                             </a>
                                         </div>

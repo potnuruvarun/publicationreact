@@ -38,11 +38,11 @@ function Loginpage() {
                 <div className="logo">
                 </div>
                 <div className="titulo">
-          <h1>Welcome...Dear</h1>
-          <p className="sub">Please log in to continue.</p>
-        </div>
+                    <h1>Welcome...Dear</h1>
+                    <p className="sub">Please log in to continue.</p>
+                </div>
                 <form id="form" >
-                    <div className="form-control" style={{height:'auto'}} >
+                    <div className="form-control" style={{ height: 'auto' }} >
                         <label for="email">Email</label>
                         <input type="text" id="email" placeholder="Enter Email" />
                         <i id="icon2" onclick="eyeClick()" className=""></i>
@@ -50,7 +50,7 @@ function Loginpage() {
                         <small>Not in Valid Email Format</small>
                     </div>
 
-                    <div className="form-control" style={{height:'auto'}}>
+                    <div className="form-control" style={{ height: 'auto' }}>
                         <label for="password">Password</label>
                         <input
                             type="password"
@@ -70,9 +70,13 @@ function Loginpage() {
                         {/* <!-- <p className="re_senha">Recuperar senha</p> --> */}
                     </div>
 
-                    <button className="button-entrar" onClick={login}  type="submit">Log In</button>
+                    <button className="button-entrar" onClick={login} type="submit">Log In</button>
                     <Link to={"/registration"}>
-                    <button className="button-criar" type="submit">Create Account</button>
+                        <button className="button-criar" type="submit">Create Account</button>
+                    </Link>
+                    <hr />
+                    <Link to={"/forgot"}>
+                        <a type="submit">forgot password</a>
                     </Link>
                 </form>
             </div>

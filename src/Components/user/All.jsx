@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import Facultyservice from '../../Services/Facultyservice';
 import { Link } from "react-router-dom";
 import './style.css';
-
+import Sidebar from "../content/sidebar";
 // class All extends React.Component {
 //     constructor(props) {
 //         super(props);
@@ -56,7 +56,7 @@ function All() {
     useEffect(() => {
         Facultyservice.getalldata().then((res) => {
             setAlldata(res.data)
-            if (timer ===1000) {
+            if (timer === 1000) {
                 console.log(timer)
                 localStorage.clear();
             }
@@ -64,40 +64,45 @@ function All() {
         console.log(alldata);
     }, []);
     return (
-        <div>
-            <Link to={"/Faculty"}> <button className="btn">Go to Faculty list</button></Link>
-            <Link to={"/Student"}> <button className="btn">Go to Student list</button></Link>
-            <div class="bg-circles">
-                <div class="circle-1"></div>
-                <div class="circle-2"></div>
-                <div class="circle-3"></div>
-                <div class="circle-4"></div>
+        <div >
+            <div>
+                <Sidebar />;
             </div>
-            <h1 class="centerr">All Results</h1>
-            <table className="fl-table">
-                <thead>
-                    <tr>
-                        <th>token</th>
-                        <th>publicationdetail</th>
-                        <th>publishername</th>
-                        <th>dateofpublish</th>
-                        <th>publisherType</th>
-                    </tr>
-                </thead>
-                <tbody >
-                    {
-                        alldata.map((item, index) => (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{item.publicationdetail}</td>
-                                <td>{item.publishername}</td>
-                                <td>{item.dateofpublish}</td>
-                                <td>{item.publisherType}</td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
+            <div>
+                <Link to={"/Faculty"} style={{float:'right'}}> <button className="btn">Go to Faculty list</button></Link>
+                <Link to={"/Student"} style={{float:'right'}}> <button className="btn">Go to Student list</button></Link>
+                <div class="bg-circles">
+                    <div class="circle-1"></div>
+                    <div class="circle-2"></div>
+                    <div class="circle-3"></div>
+                    <div class="circle-4"></div>
+                </div>
+                <h1 class="centerr">All Results</h1>
+                <table className="fl-table">
+                    <thead>
+                        <tr>
+                            <th>token</th>
+                            <th>publicationdetail</th>
+                            <th>publishername</th>
+                            <th>dateofpublish</th>
+                            <th>publisherType</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        {
+                            alldata.map((item, index) => (
+                                <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>{item.publicationdetail}</td>
+                                    <td>{item.publishername}</td>
+                                    <td>{item.dateofpublish}</td>
+                                    <td>{item.publisherType}</td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
 
 
