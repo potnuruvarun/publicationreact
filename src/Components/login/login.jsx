@@ -27,6 +27,7 @@ function Loginpage() {
                 if (error.response && error.response.status === 401) {
                     alert("Invalid Username or Password");
                 } else {
+                    alert("server is down")
                     console.error("An error occurred:", error);
                 }
             });

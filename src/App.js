@@ -12,8 +12,7 @@ import loginpage from "./Components/login/login";
 import Registration from "./Components/registration/registration";
 import Forgot from "./Components/registration/forgotpassword";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { useEffect } from "react";
-import { gapi } from "gapi-script";
+import Test from "./Components/test";
 
 function App() {
   // const clientId="269454792153-rss16496mirh4fct923tatmupblsgdln.apps.googleusercontent.com"
@@ -35,10 +34,12 @@ function App() {
           <Route path="/Home" Component={All}></Route>
           <Route path="/Faculty" Component={Faculty}></Route>
           <Route path="/Student" Component={Student}></Route>
-          <Route path="/Demo" Component={Demo}></Route>
+          <Route path="/Demo"  element={<Demo brand="varun" />}>
+          </Route>
           <Route path="/demoo" Component={demo}></Route>
           <Route path="/registration" Component={Registration}></Route>
           <Route path="/forgot" Component={Forgot}></Route>
+          <Route path="/test" Component={Test}></Route>
 
           {/* <Route path='/' element={<Error />}></Route> */}
         </Routes>

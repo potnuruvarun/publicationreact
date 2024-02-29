@@ -1,9 +1,9 @@
 import React, { Component, useState } from "react";
 import { useReducer } from "react";
 
-function Demo() {
+function Demo(props) {
   const [data, setData] = useState([]);
-  const [state, dispatch] = useReducer(reducer, { age: 42 });
+  const [state, dispatch] = useReducer(reducer, { age: 23 });
   function submitHandler(event) {
     event.preventDefault();
     const name = document.getElementById("name").value;
@@ -30,6 +30,7 @@ function Demo() {
         Increment age
       </button>
       <p>Hello! You are {state.age}.</p>
+      <p>Hello! You are {props.brand}.</p>
       <form>
         <label>
           Enter your name:
