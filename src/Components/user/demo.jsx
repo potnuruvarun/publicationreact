@@ -1,9 +1,19 @@
 import React, { Component, useState } from "react";
 import { useReducer } from "react";
+import Facultyservice from "../../Services/Facultyservice";
+import { useEffect } from "react";
 
 function Demo(props) {
   const [data, setData] = useState([]);
   const [state, dispatch] = useReducer(reducer, { age: 23 });
+  const [student, setStudent] = useState([])
+
+  useEffect(() => {
+    Facultyservice.getstudentdata().then((res) => {
+      setStudent(res.data);
+      console.log(res.data)
+    })
+  }, []);
   function submitHandler(event) {
     event.preventDefault();
     const name = document.getElementById("name").value;
@@ -20,7 +30,7 @@ function Demo(props) {
     }
     throw Error('Unknown action.');
   }
-  
+
 
   return (
     <div>
@@ -31,6 +41,12 @@ function Demo(props) {
       </button>
       <p>Hello! You are {state.age}.</p>
       <p>Hello! You are {props.brand}.</p>
+
+      <select name="student" id="student">
+        {student.map((std, index) => (
+          <option key={index} value={std.id}>{std.publishername}</option>
+        ))}
+      </select>
       <form>
         <label>
           Enter your name:

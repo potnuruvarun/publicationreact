@@ -1,21 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import './css/style.css';
 import { Link } from "react-router-dom";
 import Facultyservice from "../../Services/Facultyservice";
+import axios from "axios";
 function Loginpage() {
+    const [logindata, setlogindata] = useState([{
+        email: '',
+        password: ''
+    }])
     function login(event) {
         event.preventDefault();
-        var obj = {
-            email: document.getElementById("email").value,
-            password: document.getElementById("password").value
-        }
-        console.log(obj)
-        Facultyservice.login(obj).then((response) => {
+        // var obj = {
+        //     email: document.getElementById("email").value,
+        //     password: document.getElementById("password").value
+        // }
+
+        console.log(logindata)
+        Facultyservice.login(logindata).then((response) => {
+            debugger
             console.log(response);
             if (response != '') {
                 localStorage.setItem('token', response.data.token);
-                alert("Login Successfully");
-                window.location.href = '/Home';
+                if (response.data.token) {
+
+                    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+                    alert("Login Successfully");
+                    window.location.href = '/Home';
+                }
+                else
+                    delete axios.defaults.headers.common["Authorization"];
+
             }
             else {
                 window.location.href('/');
@@ -45,7 +59,7 @@ function Loginpage() {
                 <form id="form" >
                     <div className="form-control" style={{ height: 'auto' }} >
                         <label for="email">Email</label>
-                        <input type="text" id="email" placeholder="Enter Email" />
+                        <input type="text" id="email" placeholder="Enter Email" onChange={(e) => setlogindata({ ...logindata, email: e.target.value })} />
                         <i id="icon2" onclick="eyeClick()" className=""></i>
                         <i className="fa-solid fa-circle-check"></i>
                         <small>Not in Valid Email Format</small>
@@ -56,7 +70,7 @@ function Loginpage() {
                         <input
                             type="password"
                             id="password"
-                            placeholder="Enter Password"
+                            placeholder="Enter Password" onChange={(e) => setlogindata({ ...logindata, password: e.target.value })}
                         />
                         <i id="icon" onclick="eyeClick()" className=""></i>
                         <i onclick="eyeClick()" className="fa-solid fa-circle-check"></i>
@@ -79,6 +93,8 @@ function Loginpage() {
                     <Link to={"/forgot"}>
                         <a type="submit">forgot password</a>
                     </Link>
+                    <hr></hr>
+                    <a href="contactus">Complient</a>
                 </form>
             </div>
             <div class="container2">

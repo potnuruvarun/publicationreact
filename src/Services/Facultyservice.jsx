@@ -25,6 +25,15 @@ class Facultyservice {
     reset(input){
         return axios.post("http://localhost:5281/api/Login/reset" , input );
     }
+
+    export()
+    {
+        return axios.get("http://localhost:5281/api/Publish/GetExcelfile/ExportExcel");
+    }
+    help(input)
+    {
+        return axios.post("http://localhost:5281/api/Login/Sendmail",input);
+    }
     
 }
 export default new  Facultyservice;
