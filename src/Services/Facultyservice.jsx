@@ -34,6 +34,11 @@ class Facultyservice {
     {
         return axios.post("http://localhost:5281/api/Login/Sendmail",input);
     }
+
+    // verify()
+    // {
+
+    // }
     
 }
 export default new  Facultyservice;

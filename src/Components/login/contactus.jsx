@@ -1,3 +1,30 @@
+// import React from 'react';
+// // styling
+// import "../login/css/Checkout.css";
+// // images
+
+// const Contactus = props => {
+//     // function that takes boolean as param to conditionally display popup
+//     const { setPopUp } = props 
+
+//     return (
+//         <div className="PopUp">
+//             {/* x close window */}
+//             <button className="popup-x" onClick={()=> setPopUp(false)} >X</button>
+//             <div className="pu-content-container">
+//                 <h1>Add more bones?</h1>
+//             </div>
+//             {/* button controls */}
+//             <div className="pu-button-container">
+//                 <button onClick={()=> setPopUp(false)}> MORE BONES! </button>
+//                 <button onClick={()=> setPopUp(false)}> No, thank you. </button>
+//             </div>
+//         </div>
+//     );
+// }
+
+// export default Contactus;
+
 import React, { useState } from "react";
 import Facultyservice from "../../Services/Facultyservice";
 
@@ -37,6 +64,7 @@ export default function Contactus() {
                 <input
                     type="email"
                     name="email"
+                    required 
                     id=""
                     onChange={(e) => setFormdata({ ...formdata, ToEmail: e.target.value })}
                 />

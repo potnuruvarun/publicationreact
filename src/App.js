@@ -8,13 +8,13 @@ import Faculty from "./Components/user/Faculty";
 import Student from "./Components/user/Student";
 import Demo from "./Components/user/demo";
 import demo from "./Components/user/demoo";
-import log from "./Components/login/login";
 import Loginpage from "./Components/login/login";
 import Registration from "./Components/registration/registration";
 import Forgot from "./Components/registration/forgotpassword";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Test from "./Components/test";
 import Contactus from "./Components/login/contactus";
+import location from "./Components/login/location";
 function App() {
   return (
     <GoogleOAuthProvider clientId="269454792153-rss16496mirh4fct923tatmupblsgdln.apps.googleusercontent.com">
@@ -32,6 +32,7 @@ function App() {
           <Route path="/test" Component={Test}></Route>
           <Route path="/" element={<Error />}></Route>
           <Route path="/contactus" Component={Contactus}></Route>
+          <Route path="/location" Component={location}></Route>
         </Routes>
       </BrowserRouter>
     </GoogleOAuthProvider>

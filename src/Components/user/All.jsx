@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import './style.css';
 import Sidebar from "../content/sidebar";
 import { Button } from "bootstrap";
+import axios from "axios";
+import { toast } from "react-toastify";
 // class All extends React.Component {
 //     constructor(props) {
 //         super(props);
@@ -56,6 +58,7 @@ function All() {
 
     function ongenerateExcel() {
         Facultyservice.export().then((res) => {
+
             console.log(res.data.data)
             var binaryData = atob(res.data.data);
 
@@ -84,24 +87,56 @@ function All() {
         newArrayy.splice(index, 1);
         setAlldata(newArrayy);
     }
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const token = localStorage.getItem('token');
+    //             console.log('Token:', token);
+    //             if (token) {
+    //                 await Facultyservice.getalldata({
+    //                     headers: {
+    //                         'Authorization':'Bearer '+token
+    //                     }
+    //                 }).then((res) => {
+    //                     setAlldata(res.data)
+    //                 })
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching data:', error);
+    //             // Handle error (e.g., show an error message)
+    //         }
+    //     };
 
+    //     fetchData();
+    // }, []);
     useEffect(() => {
-        Facultyservice.getalldata().then((res) => {
-            console.log(res)
-            setAlldata(res.data)
-            if (timer === 1000) {
-                console.log(timer)
-                localStorage.clear();
-            }
-        }) .catch((error) => {
-            if (error.response && error.response.status === 401) {
-                alert("Server is down or you are not Authenticated");
-            } else {
-                alert("server is down")
-                console.error("An error occurred:", error);
-            }
-        });
-        console.log(alldata);
+        const token = localStorage.getItem('token');
+        console.log(token);
+        // if (token) {
+        //     Facultyservice.getalldata({
+        //         headers: {
+        //             'Authorization': 'Bearer ' + token
+        //         }
+        //     }).then((res) => {
+        //         setAlldata(res.data)
+        //     })
+        // }
+        if (token) {
+            axios.get("http://localhost:5281/api/Publish/Get", {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }).then((res) => {
+                setAlldata(res.data);
+            }).catch((error) => {
+                // Handle errors
+                console.error("Error fetching data:", error);
+            });
+        } else {
+            // Handle case where token is missing or invalid
+            alert("Error found")
+            console.error("No valid token found.");
+        }
     }, []);
 
     return (
