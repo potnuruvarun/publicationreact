@@ -6,7 +6,62 @@ import { useEffect } from "react";
 function Demo(props) {
   const [data, setData] = useState([]);
   const [state, dispatch] = useReducer(reducer, { age: 23 });
-  const [student, setStudent] = useState([])
+  const [student, setStudent] = useState([]);
+  const [newarray,setnewArray]=useState([]);
+  const [statedata, setStatedata] = useState([
+    {
+      stateid: 1,
+      statename: 'chennai',
+    },
+    {
+      stateid: 2,
+      statename: 'Andhra'
+    }
+  ]);
+
+  const [citydata, setCitydata] = useState([
+    {
+      cityid: 10,
+      cityname: 'aaa',
+      stateid: 1
+    },
+    {
+      cityid: 11,
+      cityname: 'bbb',
+      stateid: 1
+    },
+    {
+      cityid: 12,
+      cityname: 'cccc',
+      stateid: 1
+    },
+    {
+      cityid: 13,
+      cityname: '111',
+      stateid: 2
+    },
+    {
+      cityid: 14,
+      cityname: '222',
+      stateid: 2
+    },
+    {
+      cityid: 15,
+      cityname: '333',
+      stateid: 2
+    }
+  ]);
+
+  function newcity(e) {
+    const data = e.target.value;
+    console.log(data)
+    console.log(citydata)
+    // const cdata = citydata.find(item => item.stateid == data);
+    const cdata =citydata.filter(item=>item.stateid==data);
+    console.log(cdata)
+    setnewArray( cdata);
+  }
+
 
   useEffect(() => {
     Facultyservice.getstudentdata().then((res) => {
@@ -76,7 +131,22 @@ function Demo(props) {
           </tbody>
         </table>
       </div>
+      <div>
+        <select name="state" id="state" onChange={newcity}>
+          <option value={0} >Select Statename..</option>
+          {statedata.map((std, index) => (
+            <option key={index} value={std.stateid}>{std.statename} </option>
+          ))}
+        </select>
+        <select name="city" id="city">
+          {newarray.map((std, index) => (
+            <option key={index} value={std.cityid}>{std.cityname}</option>
+          ))}
+        </select>
+
+      </div>
     </div>
+
   );
 }
 

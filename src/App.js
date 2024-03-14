@@ -15,14 +15,28 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import Test from "./Components/test";
 import Contactus from "./Components/login/contactus";
 import location from "./Components/login/location";
+import ProtectedRoute from "./store/ProtectedRoute";
+import ChatbotComponent from "./Components/Chatbot/chatbot";
+import Chatmasala from "./Components/Chatbot/chatt.js";
+import gpt from "./Components/Chatbot/aichat.jsx";
 function App() {
   return (
     <GoogleOAuthProvider clientId="269454792153-rss16496mirh4fct923tatmupblsgdln.apps.googleusercontent.com">
       <BrowserRouter>
         <Routes>
+        <Route path="/gpt" Component={gpt}></Route>
+        <Route path="/ai" Component={Chatmasala}></Route>
+        <Route path="/chat" Component={ChatbotComponent}></Route>
           <Route path="/" Component={Loginpage}></Route>
           <Route path="*" Component={Error}></Route>
-          <Route path="/Home" Component={All}></Route>
+          <Route
+            path="/Home"
+            element={
+              <ProtectedRoute>
+                <All />
+              </ProtectedRoute>
+            }
+          ></Route>
           <Route path="/Faculty" Component={Faculty}></Route>
           <Route path="/Student" Component={Student}></Route>
           <Route path="/Demo" element={<Demo brand="varun" />}></Route>

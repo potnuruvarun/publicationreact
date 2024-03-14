@@ -7,8 +7,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { counter } from "@fortawesome/fontawesome-svg-core";
 import Location from "./location";
+import { useDispatch } from "react-redux";
+import { loginn } from "../../store/authslice";
+import ChatbotComponent from "../Chatbot/chatbot";
 
 function Loginpage() {
+    const dispatch = useDispatch()
     const [chance, setChance] = useState(3);
     const [logindata, setlogindata] = useState([
         {
@@ -28,7 +32,8 @@ function Loginpage() {
     // const notifySuccess = () => toast.success("Login Successful!");
     function login(event) {
         event.preventDefault();
-        // var obj = {
+        debugger
+        // var obj = {  
         //     email: document.getElementById("email").value,
         //     password: document.getElementById("password").value
         // }
@@ -40,6 +45,7 @@ function Loginpage() {
                 if (response.data.token) {
                     localStorage.setItem("token", response.data.token);
                     toast.success("successful");
+                    dispatch(loginn())
                     localStorage.removeItem("count");
                     window.location.href = "/Home";
                 } else {
@@ -96,7 +102,7 @@ function Loginpage() {
                             <label for="email">Email</label>
                             <input
                                 type="text"
-                                required 
+                                required
                                 id="email"
                                 placeholder="Enter Email"
                                 onChange={(e) =>
@@ -160,6 +166,7 @@ function Loginpage() {
                         height="100%"
                     />
                 </div>
+                <ChatbotComponent></ChatbotComponent>
             </div>
             {/* <footer className="main">
                 <div className="container1">

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { ExcelToJsonConverter } from "./excelsheet";
 
 function Demoo() {
     const [array, setArray] = useState([]);
@@ -70,7 +71,9 @@ function Demoo() {
     }
     return (
         <div>
-            
+             <div className="App">
+            <ExcelToJsonConverter />
+        </div>
             <form id="form">
                 <label> Enter Your name
                     <input type="text" name="name" aria-required id="name" value={formdata.name} onChange={(e) => setFormdata({ ...formdata, name: e.target.value })} placeholder="Name" /><br />
