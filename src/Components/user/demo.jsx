@@ -2,12 +2,13 @@ import React, { Component, useState } from "react";
 import { useReducer } from "react";
 import Facultyservice from "../../Services/Facultyservice";
 import { useEffect } from "react";
+import { Multiselect } from 'multiselect-react-dropdown'
 
 function Demo(props) {
   const [data, setData] = useState([]);
   const [state, dispatch] = useReducer(reducer, { age: 23 });
   const [student, setStudent] = useState([]);
-  const [newarray,setnewArray]=useState([]);
+  const [newarray, setnewArray] = useState([]);
   const [statedata, setStatedata] = useState([
     {
       stateid: 1,
@@ -16,7 +17,16 @@ function Demo(props) {
     {
       stateid: 2,
       statename: 'Andhra'
+    },
+    {
+      stateid: 3,
+      statename: 'tamil'
+    },
+    {
+      stateid: 4,
+      statename: 'chenn'
     }
+
   ]);
 
   const [citydata, setCitydata] = useState([
@@ -52,16 +62,25 @@ function Demo(props) {
     }
   ]);
 
+  // function newcity(e) {
+  //   const data = e.target.value;
+  //   console.log(data)
+  //   console.log(citydata)
+  //   // const cdata = citydata.find(item => item.stateid == data);
+  //   const cdata = citydata.filter(item => item.stateid == data);
+  //   console.log(cdata)
+  //   setnewArray(cdata);
+  // }
   function newcity(e) {
-    const data = e.target.value;
-    console.log(data)
-    console.log(citydata)
-    // const cdata = citydata.find(item => item.stateid == data);
-    const cdata =citydata.filter(item=>item.stateid==data);
-    console.log(cdata)
-    setnewArray( cdata);
+    debugger
+    var count = e.length;
+    var newarrrr=[]
+    for (var i = 0; count > i; i++) {
+      var cdata = citydata.filter(item => item.stateid == e[i].stateid);
+      newarrrr=[...newarrrr, ...cdata];
+      setnewArray(newarrrr)
+    }
   }
-
 
   useEffect(() => {
     Facultyservice.getstudentdata().then((res) => {
@@ -85,7 +104,6 @@ function Demo(props) {
     }
     throw Error('Unknown action.');
   }
-
 
   return (
     <div>
@@ -132,12 +150,35 @@ function Demo(props) {
         </table>
       </div>
       <div>
-        <select name="state" id="state" onChange={newcity}>
+        <Multiselect
+          options={statedata}
+          placeholder="Select states"
+          displayValue="statename"
+          value={statedata.stateid}
+          onSelect={newcity}
+          onRemove={newcity}
+          labelledBy={"Select"}
+          isCreatable={true}
+
+        />
+        {/* <select name="state" id="state" onChange={newcity}>
           <option value={0} >Select Statename..</option>
           {statedata.map((std, index) => (
             <option key={index} value={std.stateid}>{std.statename} </option>
           ))}
-        </select>
+        </select> */}
+
+        {/* <Multiselect options={statedata.map((std, index) => ({
+           options:{statedata},
+           displayValue:"statename",
+           placeholder:"Select states",
+           displayValue:"statename",
+           value:statedata.stateid
+        }
+        ))} displayValue="Country" /> */}
+
+
+
         <select name="city" id="city">
           {newarray.map((std, index) => (
             <option key={index} value={std.cityid}>{std.cityname}</option>
