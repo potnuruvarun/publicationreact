@@ -3,8 +3,11 @@ import { useReducer } from "react";
 import Facultyservice from "../../Services/Facultyservice";
 import { useEffect } from "react";
 import { Multiselect } from 'multiselect-react-dropdown'
-
+import WebsiteComponent from "../livestream/livewebsite";
+import { createContext } from "react";
+import { Counter } from "../counter.js";
 function Demo(props) {
+
   const [data, setData] = useState([]);
   const [state, dispatch] = useReducer(reducer, { age: 23 });
   const [student, setStudent] = useState([]);
@@ -61,25 +64,15 @@ function Demo(props) {
       stateid: 2
     }
   ]);
-
-  // function newcity(e) {
-  //   const data = e.target.value;
-  //   console.log(data)
-  //   console.log(citydata)
-  //   // const cdata = citydata.find(item => item.stateid == data);
-  //   const cdata = citydata.filter(item => item.stateid == data);
-  //   console.log(cdata)
-  //   setnewArray(cdata);
-  // }
   function newcity(e) {
     debugger
     var count = e.length;
-    var newarrrr=[]
+    var newarrrr = []
     for (var i = 0; count > i; i++) {
       var cdata = citydata.filter(item => item.stateid == e[i].stateid);
-      newarrrr=[...newarrrr, ...cdata];
-      setnewArray(newarrrr)
+      newarrrr = [...newarrrr, ...cdata];
     }
+    setnewArray(newarrrr)
   }
 
   useEffect(() => {
@@ -107,68 +100,72 @@ function Demo(props) {
 
   return (
     <div>
-      <button onClick={() => {
-        dispatch({ type: 'incremented_age' })
-      }}>
-        Increment age
-      </button>
-      <p>Hello! You are {state.age}.</p>
-      <p>Hello! You are {props.brand}.</p>
+     
 
-      <select name="student" id="student">
-        {student.map((std, index) => (
-          <option key={index} value={std.id}>{std.publishername}</option>
-        ))}
-      </select>
-      <form>
-        <label>
-          Enter your name:
-          <input type="text" id="name" />
-        </label>
-        <label>
-          Enter your age:
-          <input type="number" id="age" />
-        </label>
-        <button onClick={submitHandler}>Submit</button>
-      </form>
-      <div>
-        <table className="fl-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Age</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item, index) => (
-              <tr key={index}>
-                <td>{item.Name}</td>
-                <td>{item.Age}</td>
+        <button onClick={() => {
+          dispatch({ type: 'incremented_age' })
+        }}>
+          Increment age
+        </button>
+        <p>Hello! You are {state.age}.</p>
+        <p>Hello! You are {props.brand}.</p>
+
+        <select name="student" id="student">
+          {student.map((std, index) => (
+            <option key={index} value={std.id}>{std.publishername}</option>
+          ))}
+        </select>
+        <form>
+          <label>
+            Enter your name:
+            <input type="text" id="name" />
+          </label>
+          <label>
+            Enter your age:
+            <input type="number" id="age" />
+          </label>
+          <button onClick={submitHandler}>Submit</button>
+        </form>
+        <div>
+          <table className="fl-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Age</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div>
-        <Multiselect
-          options={statedata}
-          placeholder="Select states"
-          displayValue="statename"
-          value={statedata.stateid}
-          onSelect={newcity}
-          onRemove={newcity}
-          labelledBy={"Select"}
-          isCreatable={true}
+            </thead>
+            <tbody>
+              {data.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.Name}</td>
+                  <td>{item.Age}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <Multiselect
 
-        />
-        {/* <select name="state" id="state" onChange={newcity}>
+            options={statedata}
+            placeholder="Select states"
+            displayValue="statename"
+            value={statedata.stateid}
+            onSelect={newcity}
+            onRemove={newcity}
+            labelledBy={"Select"}
+            isCreatable={true}
+
+
+          />
+          {/* <select name="state" id="state" onChange={newcity}>
           <option value={0} >Select Statename..</option>
           {statedata.map((std, index) => (
             <option key={index} value={std.stateid}>{std.statename} </option>
           ))}
         </select> */}
 
-        {/* <Multiselect options={statedata.map((std, index) => ({
+          {/* <Multiselect options={statedata.map((std, index) => ({
            options:{statedata},
            displayValue:"statename",
            placeholder:"Select states",
@@ -176,16 +173,16 @@ function Demo(props) {
            value:statedata.stateid
         }
         ))} displayValue="Country" /> */}
+          <select name="city" id="city">
+            {newarray.map((std, index) => (
+              <option key={index} value={std.cityid}>{std.cityname}</option>
+            ))}
+          </select>
+          <Counter></Counter>
+          <WebsiteComponent></WebsiteComponent>
+        </div>
 
 
-
-        <select name="city" id="city">
-          {newarray.map((std, index) => (
-            <option key={index} value={std.cityid}>{std.cityname}</option>
-          ))}
-        </select>
-
-      </div>
     </div>
 
   );

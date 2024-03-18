@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
 import { ExcelToJsonConverter } from "./excelsheet";
-
 function Demoo() {
     const [array, setArray] = useState([]);
     const [formdata, setFormdata] = useState({ name: "", email: "", phonenumber: "" });
@@ -17,7 +16,7 @@ function Demoo() {
         var obj = {
             name: document.getElementById("name").value,
             email: document.getElementById("email").value,
-        }
+        }   
 
         if (obj.name == '') {
             document.getElementById("val1").innerHTML = "Enter somethig";
@@ -30,7 +29,7 @@ function Demoo() {
         }
         else {
             document.getElementById("val2").innerHTML = "";
-        setArray([...array, obj]);
+            setArray([...array, obj]);
 
         }
         document.getElementById("form").reset();
@@ -71,9 +70,10 @@ function Demoo() {
     }
     return (
         <div>
-             <div className="App">
-            <ExcelToJsonConverter />
-        </div>
+          
+            <div className="App">
+                <ExcelToJsonConverter />
+            </div>
             <form id="form">
                 <label> Enter Your name
                     <input type="text" name="name" aria-required id="name" value={formdata.name} onChange={(e) => setFormdata({ ...formdata, name: e.target.value })} placeholder="Name" /><br />
@@ -125,6 +125,9 @@ function Demoo() {
                     </tbody>
                 </table>
             </div>
+            {/* {citydata.map(city => (
+                <div key={city.cityid}>{city.cityname}</div>
+            ))} */}
         </div>
     )
 

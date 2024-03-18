@@ -15,28 +15,41 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import Test from "./Components/test";
 import Contactus from "./Components/login/contactus";
 import location from "./Components/login/location";
-import ProtectedRoute from "./store/ProtectedRoute";
+// import ProtectedRoute from "./store/ProtectedRoute";
 import ChatbotComponent from "./Components/Chatbot/chatbot";
 import Chatmasala from "./Components/Chatbot/chatt.js";
-import gpt from "./Components/Chatbot/aichat.jsx";
+import gpt from "./Components/Chatbot/aichat";
+import WebsiteComponent from "./Components/livestream/livewebsite";
+import StockGraphComponent from "./Components/livestream/Stockgraph";
+import Mainpage from "./Components/Task/practice.jsx";
+import "primeicons/primeicons.css";
+import { PrimeReactProvider } from "primereact/api";
+import "primeflex/primeflex.css";
+import "primereact/resources/primereact.css";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+
 function App() {
   return (
     <GoogleOAuthProvider clientId="269454792153-rss16496mirh4fct923tatmupblsgdln.apps.googleusercontent.com">
       <BrowserRouter>
         <Routes>
-        <Route path="/gpt" Component={gpt}></Route>
-        <Route path="/ai" Component={Chatmasala}></Route>
-        <Route path="/chat" Component={ChatbotComponent}></Route>
+          <Route path="/task" Component={Mainpage}></Route>
+          <Route path="/graph" Component={StockGraphComponent}></Route>
+          <Route path="/live" Component={WebsiteComponent}></Route>
+          <Route path="/gpt" Component={gpt}></Route>
+          <Route path="/ai" Component={Chatmasala}></Route>
+          <Route path="/chat" Component={ChatbotComponent}></Route>
           <Route path="/" Component={Loginpage}></Route>
           <Route path="*" Component={Error}></Route>
-          <Route
+          <Route path="/Home" Component={All}></Route>
+          {/* <Route
             path="/Home"
             element={
               <ProtectedRoute>
                 <All />
               </ProtectedRoute>
             }
-          ></Route>
+          ></Route> */}
           <Route path="/Faculty" Component={Faculty}></Route>
           <Route path="/Student" Component={Student}></Route>
           <Route path="/Demo" element={<Demo brand="varun" />}></Route>
