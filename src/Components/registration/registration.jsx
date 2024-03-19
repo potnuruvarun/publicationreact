@@ -14,10 +14,11 @@ export default function Registration() {
     const handleSuccess = (credentialResponse) => {
         const credentialsdata = jwtDecode(credentialResponse.credential);
         console.log(credentialsdata.email_verified)
+        console.log(credentialsdata);
         if (credentialsdata.
             email_verified === true) {
-                // <Navigate to="/Home" replace={true} />
-                navigate('/home', { replace: true });
+            // <Navigate to="/Home" replace={true} />
+            navigate('/home', { replace: true });
 
         }
         else {
@@ -38,6 +39,7 @@ export default function Registration() {
         //     .catch(error => {
         //         console.error('Error exchanging authorization code:', error);
         //     });
+        console.log(credentialsdata);
         console.log(credentialResponse);
     };
     // const onSuccess = (res) => {

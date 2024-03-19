@@ -123,6 +123,9 @@ export default function Mainpage() {
         const data = event.value;
         setSelectedcustomers(data);
     }
+    const transfer=(props)=>{
+        console.log(selectedCustomers)
+    }
 
 
     const ExportExcel = () => {
@@ -152,7 +155,7 @@ export default function Mainpage() {
         //header =hading 
         <div className="card">
               <ToastContainer />
-            {/* <button onClick={() => ExportExcel(selectedCustomers, fileName)}>Export</button> */}
+             <button onClick={() =>transfer(selectedCustomers)}>Transfer</button> 
 
             <ExcelToJsonConverter />
             <DataTable value={products} paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}

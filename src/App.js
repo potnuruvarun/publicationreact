@@ -27,12 +27,14 @@ import { PrimeReactProvider } from "primereact/api";
 import "primeflex/primeflex.css";
 import "primereact/resources/primereact.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
+import Captcha from "./Components/login/captcha.jsx";
 
 function App() {
   return (
     <GoogleOAuthProvider clientId="269454792153-rss16496mirh4fct923tatmupblsgdln.apps.googleusercontent.com">
       <BrowserRouter>
         <Routes>
+        <Route path="/captcha" Component={Captcha}></Route>
           <Route path="/task" Component={Mainpage}></Route>
           <Route path="/graph" Component={StockGraphComponent}></Route>
           <Route path="/live" Component={WebsiteComponent}></Route>

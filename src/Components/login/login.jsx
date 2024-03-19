@@ -8,10 +8,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { counter } from "@fortawesome/fontawesome-svg-core";
 import Location from "./location";
 import { useDispatch } from "react-redux";
-import { loginn } from "../../store/authslice";
 import ChatbotComponent from "../Chatbot/chatbot";
+import { useRef } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 function Loginpage() {
+    const recaptcha = useRef(null);
+    const SITE_KEY = "6LdMwJwpAAAAAKk1ehUBiMkfETqefth2mLUKf0yY";
     const dispatch = useDispatch()
     const [chance, setChance] = useState(3);
     const [logindata, setlogindata] = useState([
@@ -20,9 +23,16 @@ function Loginpage() {
             password: "",
         },
     ]);
+
     useEffect(() => {
         localStorage.removeItem("count");
     }, []);
+    // async function handleSubmit(event) {
+    //     debugger
+    //     event.preventDefault();
+    //     const token = recaptcha.current.getValue();
+    //     console.log(token);
+    // }
 
     // function contactt() {
     //     <Popup trigger={<button> Trigger</button>} position="right center">
@@ -39,50 +49,56 @@ function Loginpage() {
         // }
 
         console.log(logindata);
+        const response = recaptcha.current.getValue();
+        if (response) {
+            Facultyservice.login(logindata)
+                .then((response) => {
+                    if (response.data.token) {
+                        localStorage.setItem("token", response.data.token);
+                        toast.success("successful");
+                        // dispatch(loginn())
+                        localStorage.removeItem("count");
+                        window.location.href = "/Home";
+                    } else {
+                        setChance(chance - 1);
+                        localStorage.removeItem("token");
+                        localStorage.setItem("count", chance);
+                        console.log(chance);
+                        window.location.href("/");
+                        toast.error("fAILED");
+                        delete axios.defaults.headers.common["Authorization"];
+                        const response = localStorage.getItem("count");
+                        if (response <= 3) {
+                            toast.info("You have " + response + " login attempts left.");
+                        }
+                    }
+                })
+            // // .catch((error) => {
+            // //     if (error.response && error.response.status === 401) {
+            // //         setChance(chance - 1);
+            // //         localStorage.setItem("count", chance);
+            // //         const response = localStorage.getItem("count");
+            // //         if (response == 0) {
+            // //             axios.post("http://localhost:5281/api/Login/verify", logindata).then((res) => {
+            // //                 alert('Your account has been blocked due to multiple failed attempts. Please contact the administrator for')
+            // //             })
+            // //         }
+            // //         else if (response > 0) {
+            // //             toast.error("You have " + response + " login attempts left.");
+            // //             // axios.post(logindata).post(`http://localhost:5281/api/Login/verify"/${logindata}`).then((res) => {
+            // //             //     alert('Your account has been blocked due to multiple failed attempts. Please contact the administrator for')
+            // //             // })
 
-        Facultyservice.login(logindata)
-            .then((response) => {
-                if (response.data.token) {
-                    localStorage.setItem("token", response.data.token);
-                    toast.success("successful");
-                    dispatch(loginn())
-                    localStorage.removeItem("count");
-                    window.location.href = "/Home";
-                } else {
-                    setChance(chance - 1);
-                    localStorage.removeItem("token");
-                    localStorage.setItem("count", chance);
-                    console.log(chance);
-                    window.location.href("/");
-                    toast.error("fAILED");
-                    delete axios.defaults.headers.common["Authorization"];
-                    const response = localStorage.getItem("count");
-                    if (response <= 3) {
-                        toast.info("You have " + response + " login attempts left.");
-                    }
-                }
-            })
-            .catch((error) => {
-                if (error.response && error.response.status === 401) {
-                    setChance(chance - 1);
-                    localStorage.setItem("count", chance);
-                    const response = localStorage.getItem("count");
-                    if (response == 0) {
-                        axios.post("http://localhost:5281/api/Login/verify", logindata).then((res) => {
-                            alert('Your account has been blocked due to multiple failed attempts. Please contact the administrator for')
-                        })
-                    }
-                    else if (response > 0) {
-                        toast.error("You have " + response + " login attempts left.");
-                        // axios.post(logindata).post(`http://localhost:5281/api/Login/verify"/${logindata}`).then((res) => {
-                        //     alert('Your account has been blocked due to multiple failed attempts. Please contact the administrator for')
-                        // })
+            // //         }
+            // //     } else {
+            // //         alert(error.response)
+            // //     }
+            // // });
+        }
+        else {
+            alert("PLease Verify Captcha")
 
-                    }
-                } else {
-                    alert("An error occurred:" + error)
-                }
-            });
+        }
 
 
     }
@@ -97,7 +113,7 @@ function Loginpage() {
                         <h1>Welcome...Dear</h1>
                         <p className="sub">Please log in to continue.</p>
                     </div>
-                    <form id="form">
+                    <form id="form" >
                         <div className="form-control" style={{ height: "auto" }}>
                             <label for="email">Email</label>
                             <input
@@ -136,6 +152,8 @@ function Loginpage() {
                             </div>
                             {/* <!-- <p className="re_senha">Recuperar senha</p> --> */}
                         </div>
+                        <ReCAPTCHA sitekey={SITE_KEY} ref={recaptcha} />
+
 
                         <button className="button-entrar" onClick={login} type="submit">
                             Log In
@@ -152,8 +170,6 @@ function Loginpage() {
                         <hr></hr>
                         <div>
                             <a href="contactus" >Complient</a>
-
-
                         </div>
                         <h1></h1>
                     </form>

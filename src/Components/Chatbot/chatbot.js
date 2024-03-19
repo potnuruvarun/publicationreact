@@ -60,19 +60,43 @@ const steps = [
   {
     id: "3",
     message: " hi {previousValue}, how can I help you?",
-    trigger: 4,
+    trigger: "4",
   },
   {
     id: "4",
+    user: true,
+    trigger: "5",
+  },
+  {
+    id: "5",
     options: [
       // When we need to show a number of
       // options to choose we create alist
       // like this
-      { value: 1, label: "View Courses" },
-      { value: 2, label: "Read Articles" },
+      { value: 1, label: "complient",  trigger:"6", },
     ],
-    end: true,
+  
   },
+  {
+    id: "6",
+    message: "You can give compline here:",
+    trigger: "compline_button"
+  },
+  {
+    id: "compline_button",
+    component: (
+      <button onClick={() => window.open('http://localhost:3000/contactus', '_blank')}>
+        complient here
+      </button>
+    ),
+    trigger:"7",
+    end: true
+  },
+  {
+    id: "7",
+    message:"Thank You",
+  },
+  
 ];
 
 // Creating our own theme
